@@ -32,9 +32,8 @@ void UJInventoryWidget::Reconstruct()
 
 	UJInventoryComponent* InventoryComponent = Character->GetInventoryComponent();
 	TArray<UJBaseItem*> InventoryItems = InventoryComponent->GetInventoryItems();
-	int MaxItems = InventoryComponent->MaxItems;
 	
-	for (int i = 0; i <= MaxItems; i++)
+	for (int i = 0; i <= InventoryItems.Num(); i++)
 	{
 		UJBaseItem* BaseItem = InventoryItems[i];
 
