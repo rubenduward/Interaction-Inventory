@@ -23,4 +23,17 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Items")
 	TArray<UJBaseItem*> InventoryItems;
 
+public:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Items")
+	int MaxItems;
+	
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	bool AddItem(UJBaseItem* BaseItem);
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	bool RemoveItem(UJBaseItem* BaseItem);
+
+	UFUNCTION(BlueprintPure, BlueprintCallable, Category = "Inventory")
+	TArray<UJBaseItem*> GetInventoryItems() const;
+
 };

@@ -2,6 +2,8 @@
 
 #include "JCharacter.h"
 
+#include "JInventoryComponent.h"
+
 #include "UObject/ConstructorHelpers.h"
 #include "Camera/CameraComponent.h"
 #include "Components/DecalComponent.h"
@@ -21,6 +23,9 @@ AJCharacter::AJCharacter(const FObjectInitializer& ObjectInitializer)
 {
 	// Set size for player capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
+
+	InventoryComponent = CreateDefaultSubobject<UJInventoryComponent>(TEXT("InventoryComponent"));
+	AddOwnedComponent(InventoryComponent);
 
 	// Don't rotate character to camera direction
 	bUseControllerRotationPitch = false;
