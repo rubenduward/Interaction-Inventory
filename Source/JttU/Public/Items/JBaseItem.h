@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2019, KamikazeXeX. All rights reserverd.
 
 #pragma once
 
@@ -6,19 +6,27 @@
 #include "UObject/NoExportTypes.h"
 #include "JBaseItem.generated.h"
 
+class UJItemData;
+
 /**
- * 
+ *
  */
-UCLASS()
+UCLASS(Abstract, Blueprintable, BlueprintType)
 class JTTU_API UJBaseItem : public UObject
 {
 	GENERATED_BODY()
-	
+
 public:
 	UJBaseItem(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 public:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	uint8 bIsReusable : 1;
-	
+	UPROPERTY(BlueprintReadOnly)
+	FPrimaryAssetId AssetId;
+
+	UPROPERTY(BlueprintReadOnly, Category = "ItemData")
+	UJItemData* ItemData;
+
+public:
+	UJItemData* GetItemData();
+
 };

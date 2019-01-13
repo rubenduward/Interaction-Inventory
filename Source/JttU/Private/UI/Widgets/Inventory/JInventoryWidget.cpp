@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2019, KamikazeXeX. All rights reserverd.
 
 #include "JInventoryWidget.h"
 
@@ -32,7 +32,7 @@ void UJInventoryWidget::Reconstruct()
 
 	UJInventoryComponent* InventoryComponent = Character->GetInventoryComponent();
 	TArray<UJBaseItem*> InventoryItems = InventoryComponent->GetInventoryItems();
-	
+
 	for (int i = 0; i <= InventoryItems.Num(); i++)
 	{
 		UJBaseItem* BaseItem = InventoryItems[i];

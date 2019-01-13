@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2019, KamikazeXeX. All rights reserverd.
 
 #include "JUsableActor.h"
 
@@ -22,7 +22,7 @@ AJUsableActor::AJUsableActor(const FObjectInitializer& ObjectInitializer)
 
 void AJUsableActor::BeginPlay()
 {
-	Super::BeginPlay();	
+	Super::BeginPlay();
 }
 
 void AJUsableActor::OnBeginFocus_Implementation(APawn* InstigatorPawn)

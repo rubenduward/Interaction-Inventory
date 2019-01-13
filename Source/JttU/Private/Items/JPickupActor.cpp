@@ -1,10 +1,13 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2019, KamikazeXeX. All rights reserverd.
 
 #include "JPickupActor.h"
 
 #include "JBaseItem.h"
 #include "JInventoryComponent.h"
+#include "JItemDataAsset.h"
 #include "JCharacter.h"
+
+#include "Components/StaticMeshComponent.h"
 
 
 AJPickupActor::AJPickupActor(const FObjectInitializer& ObjectInitializer)
@@ -13,16 +16,46 @@ AJPickupActor::AJPickupActor(const FObjectInitializer& ObjectInitializer)
 	PrimaryActorTick.bCanEverTick = false;
 
 	BaseItem = nullptr;
-	ItemRowName = NAME_None;
 }
 
 void AJPickupActor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (ItemRowName != NAME_None)
+}
+
+void AJPickupActor::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+
+}
+
+void AJPickupActor::OnConstruction(const FTransform& Transform)
+{
+	Super::OnConstruction(Transform);
+
+	SpawnBaseItem();
+	LoadStaticMesh();
+}
+
+void AJPickupActor::SpawnBaseItem()
+{
+	if (ItemAsset.IsValid())
 	{
-		// BaseItem = (UJBaseItem*)UJInventoryComponent::SpawnItemStatic(ItemRowName, this);
+		BaseItem = UJInventoryComponent::SpawnBaseItemStatic(ItemAsset, this, false);
+	}
+}
+
+void AJPickupActor::LoadStaticMesh()
+{
+	if (BaseItem)
+	{
+		UJItemData* ItemData = BaseItem->GetItemData();
+		UStaticMesh* StaticMesh = ItemData->StaticMesh.LoadSynchronous();
+		if (StaticMesh)
+		{
+			GetStaticMeshComponent()->SetStaticMesh(StaticMesh);
+		}
 	}
 }
 

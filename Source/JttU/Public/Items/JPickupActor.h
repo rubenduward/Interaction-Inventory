@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2019, KamikazeXeX. All rights reserverd.
 
 #pragma once
 
@@ -19,15 +19,21 @@ class JTTU_API AJPickupActor : public AJUsableActor
 public:
 	AJPickupActor(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
-public:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
-	FName ItemRowName;
-
-	UPROPERTY(BlueprintReadWrite, Category = "Item")
-	UJBaseItem* BaseItem;
-
 protected:
 	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+	virtual void OnConstruction(const FTransform& Transform) override;
+
+protected:
+	void SpawnBaseItem();
+	void LoadStaticMesh();
+
+public:
+	UPROPERTY(BlueprintReadOnly, Category = "Item")
+	UJBaseItem* BaseItem;
+
+	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Category = "Item")
+	FPrimaryAssetId ItemAsset;
 
 public:
 	bool Interact_Implementation(APawn* InstigatorPawn, FName Action) override;

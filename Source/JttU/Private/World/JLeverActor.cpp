@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2019, KamikazeXeX. All rights reserverd.
 
 #include "JLeverActor.h"
 
@@ -23,7 +23,7 @@ AJLeverActor::AJLeverActor(const FObjectInitializer& ObjectInitializer)
 void AJLeverActor::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 }
 
 void AJLeverActor::OnBeginFocus_Implementation(APawn* InstigatorPawn)

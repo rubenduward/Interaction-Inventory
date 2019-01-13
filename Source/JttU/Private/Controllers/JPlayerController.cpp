@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2019, KamikazeXeX. All rights reserverd.
 
 #include "JPlayerController.h"
 
@@ -35,7 +35,7 @@ void AJPlayerController::SetupInputComponent()
 	InputComponent->BindAction("SetDestination", IE_Pressed, this, &AJPlayerController::OnSetDestinationPressed);
 	InputComponent->BindAction("SetDestination", IE_Released, this, &AJPlayerController::OnSetDestinationReleased);
 
-	// support touch devices 
+	// support touch devices
 	InputComponent->BindTouch(EInputEvent::IE_Pressed, this, &AJPlayerController::MoveToTouchLocation);
 	InputComponent->BindTouch(EInputEvent::IE_Repeat, this, &AJPlayerController::MoveToTouchLocation);
 

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2019, KamikazeXeX. All rights reserverd.
 
 #pragma once
 
@@ -26,7 +26,7 @@ protected:
 public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Items")
 	int MaxItems;
-	
+
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	bool AddItem(UJBaseItem* BaseItem);
 
@@ -35,5 +35,11 @@ public:
 
 	UFUNCTION(BlueprintPure, BlueprintCallable, Category = "Inventory")
 	TArray<UJBaseItem*> GetInventoryItems() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	static UJBaseItem* SpawnBaseItemStatic(const FPrimaryAssetId& ItemAssetId, UObject* Owner, bool bAdd = false);
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	UJBaseItem* SpawnBaseItem(const FPrimaryAssetId& ItemAssetId, bool bAdd);
 
 };

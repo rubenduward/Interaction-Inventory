@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2019, KamikazeXeX. All rights reserverd.
 
 #include "JInventoryItemGrid.h"
 
@@ -58,7 +58,7 @@ UGridSlot* UJInventoryItemGrid::AddItemToGrid(UWidget* Widget, int ItemIndex)
 	//UGInventoryItemWidget* InventoryWidget = Cast<UGInventoryItemWidget>(CreateWidget(GetOwningPlayer(), ItemWidgetClass));
 	//InventoryWidget->Setup();
 
-	// UUniformGridSlot* GridItem = 
+	// UUniformGridSlot* GridItem =
 	// GridItem->SetColumn(0);
 	// GridItem->SetRow(Children);
 }

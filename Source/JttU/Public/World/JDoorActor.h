@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2019, KamikazeXeX. All rights reserverd.
 
 #pragma once
 
@@ -12,8 +12,8 @@ UCLASS()
 class JTTU_API AJDoorActor : public AJUsableActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	AJDoorActor(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 protected:
@@ -58,5 +58,5 @@ public:
 public:
 	// Usable Interface
 	bool Interact_Implementation(APawn* InstigatorPawn, FName Action) override;
-	
+
 };

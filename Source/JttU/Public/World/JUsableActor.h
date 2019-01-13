@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2019, KamikazeXeX. All rights reserverd.
 
 #pragma once
 
@@ -13,8 +13,8 @@ UCLASS()
 class JTTU_API AJUsableActor : public AActor, public IJUsableInterface
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	AJUsableActor(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 protected:

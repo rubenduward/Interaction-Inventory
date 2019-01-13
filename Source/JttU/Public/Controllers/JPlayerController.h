@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2019, KamikazeXeX. All rights reserverd.
 
 #pragma once
 
@@ -7,7 +7,7 @@
 #include "JPlayerController.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class JTTU_API AJPlayerController : public APlayerController

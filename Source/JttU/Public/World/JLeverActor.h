@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2019, KamikazeXeX. All rights reserverd.
 
 #pragma once
 
@@ -12,8 +12,8 @@ UCLASS()
 class JTTU_API AJLeverActor : public AJUsableActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	AJLeverActor(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 protected:

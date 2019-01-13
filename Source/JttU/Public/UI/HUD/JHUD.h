@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2019, KamikazeXeX. All rights reserverd.
 
 #pragma once
 
@@ -9,7 +9,7 @@
 class UJInventoryWidget;
 
 /**
- * 
+ *
  */
 UCLASS()
 class JTTU_API AJHUD : public AHUD
@@ -22,5 +22,5 @@ public:
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Widgets")
 	UJInventoryWidget* WBP_Inventory;
-	
+
 };
