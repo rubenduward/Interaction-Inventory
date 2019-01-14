@@ -14,7 +14,7 @@ AJLeverActor::AJLeverActor(const FObjectInitializer& ObjectInitializer)
 	PrimaryActorTick.bCanEverTick = false;
 
 	SkeletalMeshComp = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Handle"));
-	SkeletalMeshComp->SetCollisionResponseToChannel(ECollisionChannel::TRACE_USEABLE, ECollisionResponse::ECR_Block);
+	SkeletalMeshComp->SetCollisionResponseToChannel(ECollisionChannel::TRACE_USABLE, ECollisionResponse::ECR_Block);
 	SkeletalMeshComp->SetupAttachment(StaticMeshComp);
 
 }

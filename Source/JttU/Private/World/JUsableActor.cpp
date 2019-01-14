@@ -16,7 +16,7 @@ AJUsableActor::AJUsableActor(const FObjectInitializer& ObjectInitializer)
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 
 	StaticMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	StaticMeshComp->SetCollisionResponseToChannel(ECollisionChannel::TRACE_USEABLE, ECollisionResponse::ECR_Block);
+	StaticMeshComp->SetCollisionResponseToChannel(ECollisionChannel::TRACE_USABLE, ECollisionResponse::ECR_Block);
 	StaticMeshComp->SetupAttachment(RootComponent);
 }
 

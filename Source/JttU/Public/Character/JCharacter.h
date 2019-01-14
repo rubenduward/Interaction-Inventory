@@ -38,8 +38,21 @@ protected:
 	UJInventoryComponent* InventoryComponent;
 
 public:
-	// Called every frame.
 	virtual void Tick(float DeltaSeconds) override;
+
+	/** Updates the location of the material based cursor. */
+	void UpdateCursorLocation();
+
+	/** Will update the focused usable actor after first tracing for one. */
+	void UpdateFocusedUsableActor();
+
+	/** Traces for a usable actor under the mouse cursor. */
+	UFUNCTION(BlueprintCallable, Category = "ObjectInteraction")
+	AActor* TraceForUsableActor();
+
+	/** The currently focused usable actor. */
+	UPROPERTY()
+	AActor* FocusedUsableActor;
 
 public:
 	/** Returns TopDownCameraComponent subobject **/

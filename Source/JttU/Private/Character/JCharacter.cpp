@@ -2,7 +2,9 @@
 
 #include "JCharacter.h"
 
+#include "JttU.h"
 #include "JInventoryComponent.h"
+#include "JUsableInterface.h"
 
 #include "UObject/ConstructorHelpers.h"
 #include "Camera/CameraComponent.h"
@@ -14,6 +16,7 @@
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "Materials/Material.h"
 #include "Engine/World.h"
+#include "Kismet/GameplayStatics.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AJCharacter
@@ -71,30 +74,73 @@ void AJCharacter::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
-	if (CursorToWorld != nullptr)
+	UpdateCursorLocation();
+	UpdateFocusedUsableActor();
+}
+
+void AJCharacter::UpdateCursorLocation()
+{
+	if (!CursorToWorld) return;
+
+	if (APlayerController* PC = Cast<APlayerController>(GetController()))
 	{
-		if (UHeadMountedDisplayFunctionLibrary::IsHeadMountedDisplayEnabled())
+		FHitResult TraceHitResult;
+		PC->GetHitResultUnderCursor(ECC_Visibility, true, TraceHitResult);
+		FVector CursorFV = TraceHitResult.ImpactNormal;
+		FRotator CursorR = CursorFV.Rotation();
+		CursorToWorld->SetWorldLocation(TraceHitResult.Location);
+		CursorToWorld->SetWorldRotation(CursorR);
+	}
+}
+
+void AJCharacter::UpdateFocusedUsableActor()
+{
+	AActor* NextFocusedUsableActor = TraceForUsableActor();
+	if (NextFocusedUsableActor)
+	{
+		if (NextFocusedUsableActor != FocusedUsableActor)
 		{
-			if (UWorld* World = GetWorld())
+			// End focus on old actor
+			if (FocusedUsableActor)
 			{
-				FHitResult HitResult;
-				FCollisionQueryParams Params(NAME_None, FCollisionQueryParams::GetUnknownStatId());
-				FVector StartLocation = TopDownCameraComponent->GetComponentLocation();
-				FVector EndLocation = TopDownCameraComponent->GetComponentRotation().Vector() * 2000.0f;
-				Params.AddIgnoredActor(this);
-				World->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECC_Visibility, Params);
-				FQuat SurfaceRotation = HitResult.ImpactNormal.ToOrientationRotator().Quaternion();
-				CursorToWorld->SetWorldLocationAndRotation(HitResult.Location, SurfaceRotation);
+				IJUsableInterface::Execute_OnEndFocus(FocusedUsableActor, this);
 			}
-		}
-		else if (APlayerController* PC = Cast<APlayerController>(GetController()))
-		{
-			FHitResult TraceHitResult;
-			PC->GetHitResultUnderCursor(ECC_Visibility, true, TraceHitResult);
-			FVector CursorFV = TraceHitResult.ImpactNormal;
-			FRotator CursorR = CursorFV.Rotation();
-			CursorToWorld->SetWorldLocation(TraceHitResult.Location);
-			CursorToWorld->SetWorldRotation(CursorR);
+
+			// Change focused actor
+			FocusedUsableActor = NextFocusedUsableActor;
+
+			// Start focus on new actor
+			IJUsableInterface::Execute_OnBeginFocus(FocusedUsableActor, this);
 		}
 	}
+	else
+	{
+		// End Focus If Out Of Range
+		if (FocusedUsableActor)
+		{
+			IJUsableInterface::Execute_OnEndFocus(FocusedUsableActor, this);
+		}
+
+		FocusedUsableActor = nullptr;
+	}
+}
+
+AActor * AJCharacter::TraceForUsableActor()
+{
+
+	if (APlayerController* PC = Cast<APlayerController>(GetController()))
+	{
+		FHitResult TraceHitResult;
+		PC->GetHitResultUnderCursor(TRACE_USABLE, true, TraceHitResult);
+
+		if (AActor* HitActor = TraceHitResult.GetActor())
+		{
+			if (UKismetSystemLibrary::DoesImplementInterface(HitActor, UJUsableInterface::StaticClass()))
+			{
+				return HitActor;
+			}
+		}
+	}
+
+	return nullptr;
 }
