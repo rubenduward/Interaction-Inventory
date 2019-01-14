@@ -30,10 +30,12 @@ void UJInventoryWidget::Reconstruct()
 	AJCharacter* Character = Cast<AJCharacter>(GetOwningPlayerPawn());
 	check(Character);
 
+	WBP_ItemGrid->ClearItemGrid();
+
 	UJInventoryComponent* InventoryComponent = Character->GetInventoryComponent();
 	TArray<UJBaseItem*> InventoryItems = InventoryComponent->GetInventoryItems();
 
-	for (int i = 0; i <= InventoryItems.Num(); i++)
+	for (int i = 0; i < InventoryItems.Num(); i++)
 	{
 		UJBaseItem* BaseItem = InventoryItems[i];
 

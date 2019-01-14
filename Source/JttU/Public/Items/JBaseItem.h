@@ -27,6 +27,7 @@ public:
 	UJItemData* ItemData;
 
 public:
+	UFUNCTION(BlueprintCallable, Category = "ItemData")
 	UJItemData* GetItemData();
 
 };

@@ -16,13 +16,6 @@ AJDoorActor::AJDoorActor(const FObjectInitializer& ObjectInitializer)
 	bHingeLeft = false;
 }
 
-void AJDoorActor::Activate()
-{
-	if (bLocked) return;
-	bOpen = !bOpen;
-	K2_AnimateDoor();
-}
-
 void AJDoorActor::Open()
 {
 	if (bLocked) return;
@@ -33,6 +26,18 @@ void AJDoorActor::Open()
 void AJDoorActor::Close()
 {
 	bOpen = false;
+	K2_AnimateDoor();
+}
+
+void AJDoorActor::SetLock(const bool bLock)
+{
+	bLocked = bLock;
+}
+
+void AJDoorActor::Activate()
+{
+	if (bLocked) return;
+	bOpen = !bOpen;
 	K2_AnimateDoor();
 }
 

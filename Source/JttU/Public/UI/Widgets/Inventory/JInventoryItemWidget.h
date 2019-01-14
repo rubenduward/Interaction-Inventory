@@ -7,6 +7,8 @@
 #include "JInventoryItemWidget.generated.h"
 
 class UJBaseItem;
+class UJInventoryItemTooltip;
+class UJItemData;
 
 class UBorder;
 class UImage;
@@ -23,13 +25,27 @@ public:
 	UJInventoryItemWidget(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 protected:
-	virtual void NativeConstruct() override;
-
-public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Widgets", meta = (BindWidget = "true"))
 	UImage* Image_ItemIcon;
 
+protected:
+	virtual void NativeConstruct() override;
+
+protected:
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Item")
+	UJBaseItem* Item;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Setup")
+	TSubclassOf<UJInventoryItemTooltip> TooltipWidgetClass;
+
 public:
 	void Setup(UJBaseItem* BaseItem);
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void AsyncLoadIcon(TSoftObjectPtr<UTexture2D> Icon, UImage* TargetWidget);
+	virtual void SetIcon(TSoftObjectPtr<UTexture2D> Icon, UImage* TargetWidget);
+
+	UFUNCTION(BlueprintPure, BlueprintCallable, Category = "Inventory")
+	UWidget* GetToolTipWidget();
 
 };

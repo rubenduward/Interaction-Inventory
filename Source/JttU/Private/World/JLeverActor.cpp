@@ -26,6 +26,11 @@ void AJLeverActor::BeginPlay()
 
 }
 
+void AJLeverActor::SetEnabled(const bool bEnable)
+{
+	bEnabled = bEnable;
+}
+
 void AJLeverActor::OnBeginFocus_Implementation(APawn* InstigatorPawn)
 {
 	StaticMeshComp->SetRenderCustomDepth(true);

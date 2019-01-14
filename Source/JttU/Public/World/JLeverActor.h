@@ -23,6 +23,14 @@ protected:
 protected:
 	virtual void BeginPlay() override;
 
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Lever")
+	uint8 bEnabled : 1;
+
+public:
+	UFUNCTION(BlueprintCallable)
+	void SetEnabled(const bool bEnable);
+
 public:
 	// Usable Interface
 	void OnBeginFocus_Implementation(APawn* InstigatorPawn) override;

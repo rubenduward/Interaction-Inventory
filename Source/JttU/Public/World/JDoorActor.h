@@ -23,16 +23,16 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Door")
 	USoundCue* SoundClose;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Door")
+	UPROPERTY(VisibleAnywhere, Category = "Door")
 	FRotator StartRotation;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Door")
+	UPROPERTY(VisibleAnywhere, Category = "Door")
 	FRotator EndRotation;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Door")
+	UPROPERTY(VisibleAnywhere, Category = "Door")
 	uint8 bOpen : 1;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Door")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Door")
 	uint8 bLocked : 1;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Door")
@@ -44,6 +44,9 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category = "Door")
 	void Close();
+
+	UFUNCTION(BlueprintCallable, Category = "Door")
+	void SetLock(const bool bLock = false);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Door")
 	void K2_AnimateDoor();

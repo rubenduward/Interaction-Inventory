@@ -10,6 +10,7 @@ class UJInventoryComponent;
 
 class UCameraComponent;
 class UDecalComponent;
+class UInputComponent;
 class USpringArmComponent;
 
 UCLASS(config=Game)
@@ -39,9 +40,21 @@ protected:
 
 public:
 	virtual void Tick(float DeltaSeconds) override;
+	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 
+protected:
 	/** Updates the location of the material based cursor. */
 	void UpdateCursorLocation();
+
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	void OnLeftClickPressed();
+
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	void OnLeftClickReleased();
+
+protected:
+	/** Client Use Input Key (F) */
+	bool OnInteract();
 
 	/** Will update the focused usable actor after first tracing for one. */
 	void UpdateFocusedUsableActor();
@@ -53,6 +66,47 @@ public:
 	/** The currently focused usable actor. */
 	UPROPERTY()
 	AActor* FocusedUsableActor;
+
+protected:
+	/** Radius from doors character has to be within before completed event fires (centimeters). NOTE: Do not set to less than 50. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Setup")
+	float MoveToDoorAcceptanceRadius;
+
+	/** Radius from objects character has to be within before completed event fires (centimeters). NOTE: Do not set to less than 50. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Setup")
+	float MoveToUsableAcceptanceRadius;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Setup")
+	float NearLocationRadius;
+
+	/** Move to a usable actor with a timer. */
+	void MoveToUsableTimerStart();
+	void MoveToUsableTimerCancel();
+	void MoveToUsable();
+	void MoveToUsableComplete();
+
+	UPROPERTY()
+	FTimerHandle TimerHandle_MoveToUsable;
+
+	UPROPERTY()
+	AActor* MoveToUsableActor;
+
+	UPROPERTY()
+	FVector MoveToDestination;
+
+	float GetDistanceFromLocation(const FVector TargetLocation) const;
+	FVector GetLocationNear(const FVector TargetLocation) const;
+
+private:
+	UPROPERTY()
+	uint8 bMovementChangesDisabled : 1;
+
+public:
+	UFUNCTION(BlueprintCallable)
+	void DisableMovement(bool bDisableMovement = false);
+
+	UFUNCTION(BlueprintPure, BlueprintCallable)
+	bool IsMovementDisabled() const;
 
 public:
 	/** Returns TopDownCameraComponent subobject **/

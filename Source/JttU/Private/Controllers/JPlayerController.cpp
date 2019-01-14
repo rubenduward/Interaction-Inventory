@@ -27,26 +27,6 @@ void AJPlayerController::PlayerTick(float DeltaTime)
 	}
 }
 
-void AJPlayerController::SetupInputComponent()
-{
-	// set up gameplay key bindings
-	Super::SetupInputComponent();
-
-	InputComponent->BindAction("SetDestination", IE_Pressed, this, &AJPlayerController::OnSetDestinationPressed);
-	InputComponent->BindAction("SetDestination", IE_Released, this, &AJPlayerController::OnSetDestinationReleased);
-
-	// support touch devices
-	InputComponent->BindTouch(EInputEvent::IE_Pressed, this, &AJPlayerController::MoveToTouchLocation);
-	InputComponent->BindTouch(EInputEvent::IE_Repeat, this, &AJPlayerController::MoveToTouchLocation);
-
-	InputComponent->BindAction("ResetVR", IE_Pressed, this, &AJPlayerController::OnResetVR);
-}
-
-void AJPlayerController::OnResetVR()
-{
-	UHeadMountedDisplayFunctionLibrary::ResetOrientationAndPosition();
-}
-
 void AJPlayerController::MoveToMouseCursor()
 {
 	if (UHeadMountedDisplayFunctionLibrary::IsHeadMountedDisplayEnabled())
@@ -73,32 +53,19 @@ void AJPlayerController::MoveToMouseCursor()
 	}
 }
 
-void AJPlayerController::MoveToTouchLocation(const ETouchIndex::Type FingerIndex, const FVector Location)
-{
-	FVector2D ScreenSpaceLocation(Location);
-
-	// Trace to see what is under the touch location
-	FHitResult HitResult;
-	GetHitResultAtScreenPosition(ScreenSpaceLocation, CurrentClickTraceChannel, true, HitResult);
-	if (HitResult.bBlockingHit)
-	{
-		// We hit something, move there
-		SetNewMoveDestination(HitResult.ImpactPoint);
-	}
-}
-
-void AJPlayerController::SetNewMoveDestination(const FVector DestLocation)
+void AJPlayerController::SetNewMoveDestination(const FVector DestLocation, bool bConsiderDistance /*= false*/)
 {
 	APawn* const MyPawn = GetPawn();
 	if (MyPawn)
 	{
-		float const Distance = FVector::Dist(DestLocation, MyPawn->GetActorLocation());
-
-		// We need to issue move command only if far enough in order for walk animation to play correctly
-		if ((Distance > 120.0f))
+		if (bConsiderDistance)
 		{
-			UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, DestLocation);
+			// We need to issue move command only if far enough in order for walk animation to play correctly
+			float const Distance = FVector::Dist(DestLocation, MyPawn->GetActorLocation());
+			if (Distance < 120.0f) return;
 		}
+
+		UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, DestLocation);
 	}
 }
 
