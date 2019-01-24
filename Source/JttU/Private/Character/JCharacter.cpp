@@ -113,6 +113,7 @@ void AJCharacter::OnLeftClickPressed()
 		MoveToUsableTimerCancel();
 	}
 
+	RemoveActionsWidget();
 	if (!OnInteract())
 	{
 		PlayerController->OnSetDestinationPressed();
@@ -197,17 +198,22 @@ bool AJCharacter::OnInteract()
 	if (MoveToUsableActor) return true;
 
 	MoveToUsableActor = FocusedUsableActor;
+
 	FVector Location = MoveToUsableActor->GetActorLocation();
 
-	// If we're navigating to a door, we need to find a nearby location.
-	MoveToDestination = (MoveToUsableActor->IsA(AJDoorActor::StaticClass())) ? GetLocationNear(Location) : Location;
-
-	MoveToUsableTimerStart();
+	// Fire blueprint event to create and actions widget over the selected actor.
+	CreateActionsWidget(MoveToUsableActor);
 	return true;
 }
 
 void AJCharacter::MoveToUsableTimerStart()
 {
+	if (!MoveToUsableActor) return;
+
+	FVector Location = MoveToUsableActor->GetActorLocation();
+	// If we're navigating to a door, we need to find a nearby location.
+	MoveToDestination = (MoveToUsableActor->IsA(AJDoorActor::StaticClass())) ? GetLocationNear(Location) : Location;
+
 	GetWorldTimerManager().SetTimer(TimerHandle_MoveToUsable, this, &AJCharacter::MoveToUsable, 0.1f, true);
 }
 
@@ -246,6 +252,7 @@ void AJCharacter::MoveToUsableComplete()
 	IJUsableInterface::Execute_Interact(MoveToUsableActor, this, Action);
 
 	MoveToUsableActor = nullptr;
+	RemoveActionsWidget();
 }
 
 float AJCharacter::GetDistanceFromLocation(const FVector TargetLocation) const

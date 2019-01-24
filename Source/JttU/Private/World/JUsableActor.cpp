@@ -18,6 +18,11 @@ AJUsableActor::AJUsableActor(const FObjectInitializer& ObjectInitializer)
 	StaticMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	StaticMeshComp->SetCollisionResponseToChannel(ECollisionChannel::TRACE_USABLE, ECollisionResponse::ECR_Block);
 	StaticMeshComp->SetupAttachment(RootComponent);
+
+	ActionsPoint = CreateDefaultSubobject<USceneComponent>(TEXT("ActionsPoint"));
+	ActionsPoint->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
+	ActionsPoint->SetHiddenInGame(true);
+	ActionsPoint->SetVisibility(true);
 }
 
 void AJUsableActor::BeginPlay()

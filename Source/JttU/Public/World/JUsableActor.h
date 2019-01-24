@@ -21,6 +21,10 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Mesh", meta = (AllowPrivateAccess = "true"))
 	UStaticMeshComponent* StaticMeshComp;
 
+	/** A component that will be hidden in game but is used to get the location for the action widgets */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Mesh", meta = (AllowPrivateAccess = "true"))
+	USceneComponent* ActionsPoint;
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -32,5 +36,8 @@ public:
 
 public:
 	FORCEINLINE UStaticMeshComponent* GetStaticMeshComponent() const { return StaticMeshComp; }
+
+	UFUNCTION(BlueprintCallable)
+	FORCEINLINE FVector GetActionWidgetLocation() const { return ActionsPoint->GetComponentLocation(); }
 
 };

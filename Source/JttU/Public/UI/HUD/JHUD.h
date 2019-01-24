@@ -8,6 +8,8 @@
 
 class UJInventoryWidget;
 
+class UUserWidget;
+
 /**
  *
  */
@@ -22,5 +24,15 @@ public:
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Widgets")
 	UJInventoryWidget* WBP_Inventory;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Widgets")
+	UUserWidget* WBP_ActionsWidget;
+
+public:
+	UFUNCTION(BlueprintCallable, Category = "Actions")
+	void ShowActionsWidget(FVector2D ScreenLocation);
+
+	UFUNCTION(BlueprintCallable, Category = "Actions")
+	void HideActionsWidget();
 
 };

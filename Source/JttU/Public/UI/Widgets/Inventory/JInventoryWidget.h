@@ -33,8 +33,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	void Reconstruct();
 
-	UJInventoryItemWidget* CreateItemWidget();
-
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Setup")
 	TSubclassOf<UJInventoryItemWidget> ItemWidgetClass;

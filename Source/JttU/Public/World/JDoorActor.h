@@ -29,7 +29,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Door")
 	FRotator EndRotation;
 
-	UPROPERTY(VisibleAnywhere, Category = "Door")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Door")
 	uint8 bOpen : 1;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Door")

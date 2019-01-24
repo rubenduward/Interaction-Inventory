@@ -80,6 +80,7 @@ protected:
 	float NearLocationRadius;
 
 	/** Move to a usable actor with a timer. */
+	UFUNCTION(BlueprintCallable)
 	void MoveToUsableTimerStart();
 	void MoveToUsableTimerCancel();
 	void MoveToUsable();
@@ -108,6 +109,13 @@ public:
 	UFUNCTION(BlueprintPure, BlueprintCallable)
 	bool IsMovementDisabled() const;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void CreateActionsWidget(const AActor* SelectedActor);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void RemoveActionsWidget();
+	
 public:
 	/** Returns TopDownCameraComponent subobject **/
 	FORCEINLINE UCameraComponent* GetTopDownCameraComponent() const { return TopDownCameraComponent; }
