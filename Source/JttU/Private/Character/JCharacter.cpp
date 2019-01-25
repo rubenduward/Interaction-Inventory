@@ -143,6 +143,7 @@ void AJCharacter::UpdateCursorLocation()
 
 void AJCharacter::UpdateFocusedUsableActor()
 {
+	APlayerController* PlayerController = Cast<APlayerController>(GetController());
 	AActor* NextFocusedUsableActor = TraceForUsableActor();
 	if (NextFocusedUsableActor)
 	{
@@ -152,6 +153,7 @@ void AJCharacter::UpdateFocusedUsableActor()
 			if (FocusedUsableActor)
 			{
 				IJUsableInterface::Execute_OnEndFocus(FocusedUsableActor, this);
+				PlayerController->CurrentMouseCursor = EMouseCursor::Default;
 			}
 
 			// Change focused actor
@@ -159,6 +161,7 @@ void AJCharacter::UpdateFocusedUsableActor()
 
 			// Start focus on new actor
 			IJUsableInterface::Execute_OnBeginFocus(FocusedUsableActor, this);
+			PlayerController->CurrentMouseCursor = EMouseCursor::Hand;
 		}
 	}
 	else
@@ -167,6 +170,7 @@ void AJCharacter::UpdateFocusedUsableActor()
 		if (FocusedUsableActor)
 		{
 			IJUsableInterface::Execute_OnEndFocus(FocusedUsableActor, this);
+			PlayerController->CurrentMouseCursor = EMouseCursor::Default;
 		}
 
 		FocusedUsableActor = nullptr;
