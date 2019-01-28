@@ -13,7 +13,7 @@ AJPlayerController::AJPlayerController(const FObjectInitializer& ObjectInitializ
 	: Super(ObjectInitializer)
 {
 	bShowMouseCursor = true;
-	DefaultMouseCursor = EMouseCursor::Crosshairs;
+	DefaultMouseCursor = EMouseCursor::Default;
 }
 
 void AJPlayerController::PlayerTick(float DeltaTime)

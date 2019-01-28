@@ -72,6 +72,7 @@ AJCharacter::AJCharacter(const FObjectInitializer& ObjectInitializer)
 	}
 	CursorToWorld->DecalSize = FVector(16.0f, 32.0f, 32.0f);
 	CursorToWorld->SetRelativeRotation(FRotator(90.0f, 0.0f, 0.0f).Quaternion());
+	CursorToWorld->SetHiddenInGame(true);
 
 	bMovementChangesDisabled = false;
 	NearLocationRadius = 100.0f;
@@ -153,7 +154,6 @@ void AJCharacter::UpdateFocusedUsableActor()
 			if (FocusedUsableActor)
 			{
 				IJUsableInterface::Execute_OnEndFocus(FocusedUsableActor, this);
-				PlayerController->CurrentMouseCursor = EMouseCursor::Default;
 			}
 
 			// Change focused actor
@@ -170,10 +170,10 @@ void AJCharacter::UpdateFocusedUsableActor()
 		if (FocusedUsableActor)
 		{
 			IJUsableInterface::Execute_OnEndFocus(FocusedUsableActor, this);
-			PlayerController->CurrentMouseCursor = EMouseCursor::Default;
 		}
 
 		FocusedUsableActor = nullptr;
+		PlayerController->CurrentMouseCursor = EMouseCursor::Default;
 	}
 }
 

@@ -4,10 +4,19 @@
 
 #include "UserWidget.h"
 
+#include "WidgetBlueprintLibrary.h"
+
 AJHUD::AJHUD(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
 
+}
+
+void AJHUD::BeginPlay()
+{
+	Super::BeginPlay();
+
+	UWidgetBlueprintLibrary::SetFocusToGameViewport();
 }
 
 void AJHUD::ShowActionsWidget(FVector2D ScreenLocation)
@@ -22,4 +31,5 @@ void AJHUD::HideActionsWidget()
 {
 	if (!WBP_ActionsWidget) return;
 	WBP_ActionsWidget->RemoveFromParent();
+	UWidgetBlueprintLibrary::SetFocusToGameViewport();
 }

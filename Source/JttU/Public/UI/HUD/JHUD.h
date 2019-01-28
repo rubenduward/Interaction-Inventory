@@ -21,6 +21,9 @@ class JTTU_API AJHUD : public AHUD
 public:
 	AJHUD(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
+protected:
+	virtual void BeginPlay() override;
+
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Widgets")
 	UJInventoryWidget* WBP_Inventory;
