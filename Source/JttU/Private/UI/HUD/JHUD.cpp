@@ -2,8 +2,9 @@
 
 #include "JHUD.h"
 
-#include "UserWidget.h"
+#include "JInventoryWidget.h"
 
+#include "UserWidget.h"
 #include "WidgetBlueprintLibrary.h"
 
 AJHUD::AJHUD(const FObjectInitializer& ObjectInitializer)
@@ -32,4 +33,10 @@ void AJHUD::HideActionsWidget()
 	if (!WBP_ActionsWidget) return;
 	WBP_ActionsWidget->RemoveFromParent();
 	UWidgetBlueprintLibrary::SetFocusToGameViewport();
+}
+
+bool AJHUD::IsInventoryOpen() const
+{
+	if (!WBP_Inventory) return false;
+	return WBP_Inventory->IsInViewport();
 }

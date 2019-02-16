@@ -115,7 +115,7 @@ protected:
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void RemoveActionsWidget();
-	
+
 public:
 	/** Returns TopDownCameraComponent subobject **/
 	FORCEINLINE UCameraComponent* GetTopDownCameraComponent() const { return TopDownCameraComponent; }

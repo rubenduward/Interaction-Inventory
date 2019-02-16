@@ -31,11 +31,21 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Widgets")
 	UUserWidget* WBP_ActionsWidget;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Widgets")
+	UUserWidget* WBP_ItemActions;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Widgets")
+	UUserWidget* WBP_ItemInspect;
+
 public:
 	UFUNCTION(BlueprintCallable, Category = "Actions")
 	void ShowActionsWidget(FVector2D ScreenLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "Actions")
 	void HideActionsWidget();
+
+public:
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	bool IsInventoryOpen() const;
 
 };

@@ -3,6 +3,7 @@
 #include "JPlayerController.h"
 
 #include "JCharacter.h"
+#include "JHUD.h"
 
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Runtime/Engine/Classes/Components/DecalComponent.h"
@@ -79,6 +80,16 @@ void AJPlayerController::OnSetDestinationReleased()
 {
 	// clear flag to indicate we should stop updating the destination
 	bMoveToMouseCursor = false;
+}
+
+bool AJPlayerController::IsInventoryOpen() const
+{
+	if (AJHUD* HUD = Cast<AJHUD>(GetHUD()))
+	{
+		return HUD->IsInventoryOpen();
+	}
+
+	return false;
 }
 
 

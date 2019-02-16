@@ -100,12 +100,12 @@ void AJCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 void AJCharacter::OnLeftClickPressed()
 {
-	AJPlayerController* PlayerController = Cast<AJPlayerController>(GetController());
+	AJPlayerController* PC = Cast<AJPlayerController>(GetController());
 
 	// Return early if movement changes are disabled, MoveToUsableActor is valid or we have started interacting with something.
 	if (bMovementChangesDisabled)
 	{
-		PlayerController->OnSetDestinationReleased();
+		PC->OnSetDestinationReleased();
 		return;
 	}
 
@@ -117,21 +117,21 @@ void AJCharacter::OnLeftClickPressed()
 	RemoveActionsWidget();
 	if (!OnInteract())
 	{
-		PlayerController->OnSetDestinationPressed();
+		PC->OnSetDestinationPressed();
 	}	
 }
 
 void AJCharacter::OnLeftClickReleased()
 {
-	AJPlayerController* PlayerController = Cast<AJPlayerController>(GetController());
-	PlayerController->OnSetDestinationReleased();
+	AJPlayerController* PC = Cast<AJPlayerController>(GetController());
+	PC->OnSetDestinationReleased();
 }
 
 void AJCharacter::UpdateCursorLocation()
 {
 	if (!CursorToWorld) return;
 
-	if (APlayerController* PC = Cast<APlayerController>(GetController()))
+	if (AJPlayerController* PC = Cast<AJPlayerController>(GetController()))
 	{
 		FHitResult TraceHitResult;
 		PC->GetHitResultUnderCursor(ECC_Visibility, true, TraceHitResult);
@@ -144,9 +144,9 @@ void AJCharacter::UpdateCursorLocation()
 
 void AJCharacter::UpdateFocusedUsableActor()
 {
-	APlayerController* PlayerController = Cast<APlayerController>(GetController());
+	AJPlayerController* PC = Cast<AJPlayerController>(GetController());
 	AActor* NextFocusedUsableActor = TraceForUsableActor();
-	if (NextFocusedUsableActor)
+	if (NextFocusedUsableActor && !PC->IsInventoryOpen())
 	{
 		if (NextFocusedUsableActor != FocusedUsableActor)
 		{
@@ -161,7 +161,7 @@ void AJCharacter::UpdateFocusedUsableActor()
 
 			// Start focus on new actor
 			IJUsableInterface::Execute_OnBeginFocus(FocusedUsableActor, this);
-			PlayerController->CurrentMouseCursor = EMouseCursor::Hand;
+			PC->CurrentMouseCursor = EMouseCursor::Hand;
 		}
 	}
 	else
@@ -173,13 +173,13 @@ void AJCharacter::UpdateFocusedUsableActor()
 		}
 
 		FocusedUsableActor = nullptr;
-		PlayerController->CurrentMouseCursor = EMouseCursor::Default;
+		PC->CurrentMouseCursor = EMouseCursor::Default;
 	}
 }
 
 AActor * AJCharacter::TraceForUsableActor()
 {
-	if (APlayerController* PC = Cast<APlayerController>(GetController()))
+	if (AJPlayerController* PC = Cast<AJPlayerController>(GetController()))
 	{
 		FHitResult TraceHitResult;
 		PC->GetHitResultUnderCursor(TRACE_USABLE, true, TraceHitResult);
@@ -238,15 +238,14 @@ void AJCharacter::MoveToUsable()
 		MoveToUsableComplete();
 	}
 
-	AJPlayerController* PlayerController = Cast<AJPlayerController>(GetController());
-	PlayerController->SetNewMoveDestination(MoveToDestination, false);
+	AJPlayerController* PC = Cast<AJPlayerController>(GetController());
+	PC->SetNewMoveDestination(MoveToDestination, false);
 }
 
 void AJCharacter::MoveToUsableComplete()
 {
 	GetWorldTimerManager().ClearTimer(TimerHandle_MoveToUsable);
 
-	AJPlayerController* PlayerController = Cast<AJPlayerController>(GetController());
 	FVector DirectionVector = UKismetMathLibrary::GetDirectionUnitVector(GetActorLocation(), MoveToUsableActor->GetActorLocation());
 
 	FRotator NewRotation(0.0f, DirectionVector.Rotation().Yaw, 0.0f);

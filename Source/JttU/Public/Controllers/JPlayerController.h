@@ -35,4 +35,8 @@ public:
 	void OnSetDestinationPressed();
 	void OnSetDestinationReleased();
 
+public:
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	bool IsInventoryOpen() const;
+
 };
