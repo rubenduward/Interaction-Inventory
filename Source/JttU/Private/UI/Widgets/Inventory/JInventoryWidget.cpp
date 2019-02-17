@@ -14,7 +14,7 @@
 UJInventoryWidget::UJInventoryWidget(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
-	static ConstructorHelpers::FClassFinder<UJInventoryItemWidget> ItemWidgetBP(TEXT("/Game/JttU/Blueprints/UI/Widgets/Inventory/WBP_ItemWidget"));
+	ConstructorHelpers::FClassFinder<UJInventoryItemWidget> ItemWidgetBP(TEXT("/Game/JttU/Blueprints/UI/Widgets/Inventory/WBP_ItemWidget"));
 	ItemWidgetClass = ItemWidgetBP.Class;
 }
 

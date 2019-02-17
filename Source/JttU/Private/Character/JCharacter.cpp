@@ -74,7 +74,7 @@ AJCharacter::AJCharacter(const FObjectInitializer& ObjectInitializer)
 	CursorToWorld->SetRelativeRotation(FRotator(90.0f, 0.0f, 0.0f).Quaternion());
 	CursorToWorld->SetHiddenInGame(true);
 
-	bMovementChangesDisabled = false;
+	bMovementDisabled = false;
 	NearLocationRadius = 100.0f;
 	MoveToDoorAcceptanceRadius = 100.0f;
 	MoveToUsableAcceptanceRadius = 110.0f;
@@ -103,7 +103,7 @@ void AJCharacter::OnLeftClickPressed()
 	AJPlayerController* PC = Cast<AJPlayerController>(GetController());
 
 	// Return early if movement changes are disabled, MoveToUsableActor is valid or we have started interacting with something.
-	if (bMovementChangesDisabled)
+	if (bMovementDisabled)
 	{
 		PC->OnSetDestinationReleased();
 		return;
@@ -276,10 +276,10 @@ FVector AJCharacter::GetLocationNear(const FVector TargetLocation) const
 
 void AJCharacter::DisableMovement(const bool bDisableMovement)
 {
-	bMovementChangesDisabled = bDisableMovement;
+	bMovementDisabled = bDisableMovement;
 }
 
 bool AJCharacter::IsMovementDisabled() const
 {
-	return bMovementChangesDisabled;
+	return bMovementDisabled;
 }

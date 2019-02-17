@@ -4,6 +4,7 @@
 
 #include "JCharacter.h"
 #include "JHUD.h"
+#include "JInventoryWidget.h"
 
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Runtime/Engine/Classes/Components/DecalComponent.h"
@@ -86,10 +87,8 @@ bool AJPlayerController::IsInventoryOpen() const
 {
 	if (AJHUD* HUD = Cast<AJHUD>(GetHUD()))
 	{
-		return HUD->IsInventoryOpen();
+		return HUD->WBP_Inventory->IsInViewport();
 	}
 
 	return false;
 }
-
-

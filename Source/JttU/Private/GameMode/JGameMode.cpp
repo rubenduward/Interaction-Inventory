@@ -3,7 +3,8 @@
 #include "JGameMode.h"
 #include "JCharacter.h"
 
-AJGameMode::AJGameMode()
+AJGameMode::AJGameMode(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 	// set default pawn class to our Blueprinted character
 	DefaultPawnClass = AJCharacter::StaticClass();

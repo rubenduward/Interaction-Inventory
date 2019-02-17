@@ -100,7 +100,7 @@ protected:
 
 private:
 	UPROPERTY()
-	uint8 bMovementChangesDisabled : 1;
+	uint8 bMovementDisabled : 1;
 
 public:
 	UFUNCTION(BlueprintCallable)

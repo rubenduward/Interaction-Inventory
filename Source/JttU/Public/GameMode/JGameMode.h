@@ -12,6 +12,6 @@ class JTTU_API AJGameMode : public AGameModeBase
 	GENERATED_BODY()
 
 public:
-	AJGameMode();
+	AJGameMode(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 };
