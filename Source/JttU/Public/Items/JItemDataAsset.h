@@ -41,6 +41,10 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item")
 	TSoftObjectPtr<UStaticMesh> StaticMesh;
 
+	/** The static mesh that represents this item in the inspect menu. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item")
+	TSoftObjectPtr<UStaticMesh> InspectStaticMesh;
+
 	/** Can this item be re-used? */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "General")
 	uint8 bIsReusable : 1;
