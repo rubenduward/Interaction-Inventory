@@ -23,11 +23,11 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	FPrimaryAssetId AssetId;
 
-	UPROPERTY(BlueprintReadOnly, Category = "ItemData")
+	UPROPERTY()
 	UJItemData* ItemData;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "ItemData")
-	UJItemData* GetItemData();
+	UFUNCTION(BlueprintPure, BlueprintCallable, Category = "ItemData")
+	UJItemData* GetItemData() const;
 
 };

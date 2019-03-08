@@ -10,7 +10,7 @@ class UJBaseItem;
 class UJInventoryItemTooltip;
 class UJItemData;
 
-class UBorder;
+class UButton;
 class UImage;
 
 /**
@@ -26,6 +26,9 @@ public:
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Widgets", meta = (BindWidget = "true"))
+	UButton* Button_Item;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Widgets", meta = (BindWidget = "true"))
 	UImage* Image_ItemIcon;
 
 protected:
@@ -39,6 +42,7 @@ protected:
 	TSubclassOf<UJInventoryItemTooltip> TooltipWidgetClass;
 
 public:
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Setup(UJBaseItem* BaseItem);
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")

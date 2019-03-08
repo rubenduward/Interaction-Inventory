@@ -7,6 +7,7 @@
 #include "JHUD.generated.h"
 
 class UJInventoryWidget;
+class UJItemInspect;
 
 class UUserWidget;
 
@@ -35,7 +36,34 @@ public:
 	UUserWidget* WBP_ItemActions;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Widgets")
-	UUserWidget* WBP_ItemInspect;
+	UJItemInspect* WBP_ItemInspect;
+
+protected:
+	UPROPERTY(BlueprintReadWrite, Category = "HUD")
+	UUserWidget* ActiveWidget;
+
+public:
+	UFUNCTION(BlueprintCallable, Category = "HUD")
+	void DisplayWidget(UUserWidget* Widget);
+
+	UFUNCTION(BlueprintCallable, Category = "HUD")
+	void CloseWidget(UUserWidget* Widget = nullptr);
+
+	UFUNCTION(BlueprintCallable, Category = "HUD")
+	void FocusWidget(UUserWidget* Widget = nullptr);
+
+	UFUNCTION(BlueprintCallable, Category = "HUD")
+	bool IsWidgetOpen(UUserWidget* Widget);
+
+	UFUNCTION(BlueprintCallable, Category = "HUD")
+	bool IsAnyWidgetOpen();
+
+public:
+	UFUNCTION(BlueprintCallable, Category = "Inspect")
+	void ShowInspectWidget(UJBaseItem* ItemContext);
+
+	UFUNCTION(BlueprintCallable, Category = "Inspect")
+	void HideInspectWidget();
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Actions")

@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "JCharacter.generated.h"
 
+class AJInspectActor;
+class UJBaseItem;
 class UJInventoryComponent;
 
 class UCameraComponent;
@@ -38,6 +40,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Inventory", meta = (AllowPrivateAccess = "true"))
 	UJInventoryComponent* InventoryComponent;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Inspect", meta = (AllowPrivateAccess = "true"))
+	AJInspectActor* InspectActor;
+
 public:
 	virtual void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
@@ -66,6 +71,12 @@ protected:
 	/** The currently focused usable actor. */
 	UPROPERTY()
 	AActor* FocusedUsableActor;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Using")
+	UJBaseItem* ItemUsing;
+
+	UFUNCTION(BlueprintCallable, Category = "Using")
+	bool AttemptToUse();
 
 protected:
 	/** Radius from doors character has to be within before completed event fires (centimeters). NOTE: Do not set to less than 50. */
@@ -118,15 +129,23 @@ protected:
 
 public:
 	/** Returns TopDownCameraComponent subobject **/
+	UFUNCTION(BlueprintPure, BlueprintCallable, Category = "CameraComponent")
 	FORCEINLINE UCameraComponent* GetTopDownCameraComponent() const { return TopDownCameraComponent; }
 
-	/** Returns CameraBoom subobject **/
+	/** Returns CameraBoom subobject. */
+	UFUNCTION(BlueprintPure, BlueprintCallable, Category = "Camera")
 	FORCEINLINE USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 
-	/** Returns CursorToWorld subobject **/
+	/** Returns CursorToWorld subobject. */
+	UFUNCTION(BlueprintPure, BlueprintCallable, Category = "CursorToWorld")
 	FORCEINLINE UDecalComponent* GetCursorToWorld() { return CursorToWorld; }
 
-	/** Returns the inventory component */
+	/** Returns the inventory component. */
+	UFUNCTION(BlueprintPure, BlueprintCallable, Category = "Inventory")
 	FORCEINLINE UJInventoryComponent* GetInventoryComponent() const { return InventoryComponent; }
+
+	/** Returns the InsepctActor. */
+	UFUNCTION(BlueprintPure, BlueprintCallable, Category = "Inspect")
+	FORCEINLINE AJInspectActor* GetInspectActor() const { return InspectActor; }
 
 };

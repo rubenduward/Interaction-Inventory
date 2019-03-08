@@ -22,12 +22,15 @@ class JTTU_API IJUsableInterface
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	UFUNCTION(BlueprintNativeEvent, Category = Interaction, meta = (DisplayName = "On Begin Focus"), BlueprintCosmetic)
+	UFUNCTION(BlueprintNativeEvent, Category = "Interaction", meta = (DisplayName = "On Begin Focus"), BlueprintCosmetic)
 	void OnBeginFocus(APawn* InstigatorPawn);
 
-	UFUNCTION(BlueprintNativeEvent, Category = Interaction, meta = (DisplayName = "On End Focus"), BlueprintCosmetic)
+	UFUNCTION(BlueprintNativeEvent, Category = "Interaction", meta = (DisplayName = "On End Focus"), BlueprintCosmetic)
 	void OnEndFocus(APawn* InstigatorPawn);
 
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = Interaction, meta = (DisplayName = "On Use"), BlueprintAuthorityOnly)
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interaction", meta = (DisplayName = "Interact"), BlueprintAuthorityOnly)
 	bool Interact(APawn* InstigatorPawn, FName Action);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interaction", meta = (DisplayName = "On Used"), BlueprintAuthorityOnly)
+	bool OnUsed(APawn* InstigatorPawn, UObject* Object);
 };

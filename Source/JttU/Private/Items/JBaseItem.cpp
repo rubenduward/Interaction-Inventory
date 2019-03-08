@@ -13,7 +13,7 @@ UJBaseItem::UJBaseItem(const FObjectInitializer& ObjectInitializer)
 
 }
 
-UJItemData* UJBaseItem::GetItemData()
+UJItemData* UJBaseItem::GetItemData() const
 {
 	return ItemData;
 }

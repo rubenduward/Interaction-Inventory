@@ -3,6 +3,7 @@
 #include "JCharacter.h"
 
 #include "JttU.h"
+#include "JBaseItem.h"
 #include "JDoorActor.h"
 #include "JInventoryComponent.h"
 #include "JPlayerController.h"
@@ -101,11 +102,17 @@ void AJCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 void AJCharacter::OnLeftClickPressed()
 {
 	AJPlayerController* PC = Cast<AJPlayerController>(GetController());
+	UE_LOG(LogTemp, Warning, TEXT("AJCharacter::OnLeftClickPressed() - Running."));
 
 	// Return early if movement changes are disabled, MoveToUsableActor is valid or we have started interacting with something.
-	if (bMovementDisabled)
+	if (bMovementDisabled && !ItemUsing)
 	{
 		PC->OnSetDestinationReleased();
+		return;
+	}
+
+	if (ItemUsing && AttemptToUse())
+	{
 		return;
 	}
 
@@ -196,14 +203,32 @@ AActor * AJCharacter::TraceForUsableActor()
 	return nullptr;
 }
 
+bool AJCharacter::AttemptToUse()
+{
+	if (!ItemUsing)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AJCharacter::AttemptToUse() - ItemUsing was not valid."));
+		return false;
+	}
+	if (!FocusedUsableActor)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AJCharacter::AttemptToUse() - FocusedUsableActor was not valid."));
+		return false;
+	}
+
+	DisableMovement(false);
+
+	IJUsableInterface::Execute_OnUsed(FocusedUsableActor, this, ItemUsing);
+	UE_LOG(LogTemp, Warning, TEXT("AJCharacter::AttemptToUse() - AttemptToUse was successful."));
+	return true;
+}
+
 bool AJCharacter::OnInteract()
 {
 	if (!FocusedUsableActor) return false;
 	if (MoveToUsableActor) return true;
 
 	MoveToUsableActor = FocusedUsableActor;
-
-	FVector Location = MoveToUsableActor->GetActorLocation();
 
 	// Fire blueprint event to create and actions widget over the selected actor.
 	CreateActionsWidget(MoveToUsableActor);
