@@ -75,9 +75,6 @@ protected:
 	UPROPERTY(BlueprintReadWrite, Category = "Using")
 	UJBaseItem* ItemUsing;
 
-	UFUNCTION(BlueprintCallable, Category = "Using")
-	bool AttemptToUse();
-
 protected:
 	/** Radius from doors character has to be within before completed event fires (centimeters). NOTE: Do not set to less than 50. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Setup")
@@ -97,13 +94,16 @@ protected:
 	void MoveToUsable();
 	void MoveToUsableComplete();
 
-	UPROPERTY()
+	UPROPERTY(Transient)
 	FTimerHandle TimerHandle_MoveToUsable;
 
-	UPROPERTY()
+	UPROPERTY(Transient)
 	AActor* MoveToUsableActor;
 
-	UPROPERTY()
+	UPROPERTY(Transient)
+	FName MoveToAction;
+
+	UPROPERTY(Transient)
 	FVector MoveToDestination;
 
 	float GetDistanceFromLocation(const FVector TargetLocation) const;

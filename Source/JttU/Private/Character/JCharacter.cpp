@@ -111,11 +111,6 @@ void AJCharacter::OnLeftClickPressed()
 		return;
 	}
 
-	if (ItemUsing && AttemptToUse())
-	{
-		return;
-	}
-
 	if (MoveToUsableActor)
 	{
 		MoveToUsableTimerCancel();
@@ -203,26 +198,6 @@ AActor * AJCharacter::TraceForUsableActor()
 	return nullptr;
 }
 
-bool AJCharacter::AttemptToUse()
-{
-	if (!ItemUsing)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("AJCharacter::AttemptToUse() - ItemUsing was not valid."));
-		return false;
-	}
-	if (!FocusedUsableActor)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("AJCharacter::AttemptToUse() - FocusedUsableActor was not valid."));
-		return false;
-	}
-
-	DisableMovement(false);
-
-	IJUsableInterface::Execute_OnUsed(FocusedUsableActor, this, ItemUsing);
-	UE_LOG(LogTemp, Warning, TEXT("AJCharacter::AttemptToUse() - AttemptToUse was successful."));
-	return true;
-}
-
 bool AJCharacter::OnInteract()
 {
 	if (!FocusedUsableActor) return false;
@@ -277,7 +252,16 @@ void AJCharacter::MoveToUsableComplete()
 	SetActorRotation(NewRotation);
 
 	FName Action = NAME_None;
-	IJUsableInterface::Execute_Interact(MoveToUsableActor, this, Action);
+	if (ItemUsing)
+	{
+		Action = TEXT("Use");
+		IJUsableInterface::Execute_Interact(MoveToUsableActor, this, Action);
+	}
+	else
+	{
+		Action = TEXT("Interact");
+		IJUsableInterface::Execute_Interact(MoveToUsableActor, this, Action);
+	}
 
 	MoveToUsableActor = nullptr;
 	RemoveActionsWidget();

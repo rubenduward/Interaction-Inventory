@@ -116,7 +116,9 @@ void AJHUD::ShowInspectWidget(UJBaseItem* ItemContext)
 
 void AJHUD::HideInspectWidget()
 {
-	WBP_ItemInspect->RemoveFromParent();
+	if (!WBP_ItemInspect || !WBP_ItemInspect->IsInViewport()) return;
+
+	WBP_ItemInspect->RemoveFromViewport();
 	FocusWidget(WBP_Inventory);
 }
 
@@ -130,9 +132,10 @@ void AJHUD::ShowActionsWidget(FVector2D ScreenLocation)
 
 void AJHUD::HideActionsWidget()
 {
-	if (!WBP_ActionsWidget) return;
+	if (!WBP_ActionsWidget || !WBP_ActionsWidget->IsInViewport()) return;
 
-	CloseWidget(WBP_ActionsWidget);
+	WBP_ActionsWidget->RemoveFromViewport();
+	FocusWidget(nullptr);
 	UWidgetBlueprintLibrary::SetFocusToGameViewport();
 }
 
@@ -140,4 +143,10 @@ bool AJHUD::IsInventoryOpen() const
 {
 	if (!WBP_Inventory) return false;
 	return WBP_Inventory->IsInViewport();
+}
+
+bool AJHUD::IsActionsWidgetShown() const
+{
+	if (!WBP_ActionsWidget) return false;
+	return WBP_ActionsWidget->IsInViewport();
 }

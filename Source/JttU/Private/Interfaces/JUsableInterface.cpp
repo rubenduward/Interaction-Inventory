@@ -15,8 +15,3 @@
 //{
 //	return false;
 //}
-//
-//bool IJUsableInterface::OnUsed_Implementation(APawn* InstigatorPawn, UObject* Object)
-//{
-//	return false;
-//}

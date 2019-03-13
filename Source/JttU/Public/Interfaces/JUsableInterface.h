@@ -31,6 +31,4 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interaction", meta = (DisplayName = "Interact"), BlueprintAuthorityOnly)
 	bool Interact(APawn* InstigatorPawn, FName Action);
 
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interaction", meta = (DisplayName = "On Used"), BlueprintAuthorityOnly)
-	bool OnUsed(APawn* InstigatorPawn, UObject* Object);
 };

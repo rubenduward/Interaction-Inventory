@@ -76,4 +76,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	bool IsInventoryOpen() const;
 
+	UFUNCTION(BlueprintCallable, Category = "Actions")
+	bool IsActionsWidgetShown() const;
+
 };

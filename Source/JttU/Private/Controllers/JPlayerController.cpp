@@ -87,8 +87,19 @@ bool AJPlayerController::IsInventoryOpen() const
 {
 	if (AJHUD* HUD = Cast<AJHUD>(GetHUD()))
 	{
-		return HUD->WBP_Inventory->IsInViewport();
+		return HUD->IsInventoryOpen();
 	}
 
 	return false;
 }
+
+bool AJPlayerController::IsActionsWidgetShown() const
+{
+	if (AJHUD* HUD = Cast<AJHUD>(GetHUD()))
+	{
+		return HUD->IsActionsWidgetShown();
+	}
+
+	return false;
+}
+
