@@ -31,7 +31,7 @@ AJInspectActor::AJInspectActor(const FObjectInitializer& ObjectInitializer)
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 	StaticMeshComponent->SetupAttachment(SceneComponent);
 
-	DesiredExtent = FVector(18.0f, 18.0f, 18.0f);
+	DefaultDesiredExtent = DesiredExtent = FVector(18.0f, 18.0f, 18.0f);
 	bRotationEnabled = false;
 }
 
@@ -93,9 +93,10 @@ void AJInspectActor::OnMouseMove(FVector2D MouseLocation)
 	OnStartRotateLocation = MouseLocation;
 }
 
-void AJInspectActor::UpdateMesh(UStaticMesh* NewStaticMesh)
+void AJInspectActor::UpdateMesh(UStaticMesh* NewStaticMesh, float ZoomLevel)
 {
 	StaticMeshComponent->SetStaticMesh(NewStaticMesh);
+	DesiredExtent = FVector(ZoomLevel, ZoomLevel, ZoomLevel);
 
 	FHitResult HitResult;
 	StaticMeshComponent->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f), false, &HitResult, ETeleportType::None);

@@ -21,6 +21,7 @@ UJItemData::UJItemData(const FObjectInitializer& ObjectInitializer)
 
 	BaseItem = UJBaseItem::StaticClass();
 
+	ZoomLevel = 18.0f;
 	bIsReusable = false;
 	ReuseCount = -1;
 }

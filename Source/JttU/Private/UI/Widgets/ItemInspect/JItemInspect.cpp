@@ -40,5 +40,5 @@ void UJItemInspect::UpdateInspectActor(UJBaseItem* Item)
 		return;
 	}
 
-	PlayerCharacter->GetInspectActor()->UpdateMesh(StaticMesh);
+	PlayerCharacter->GetInspectActor()->UpdateMesh(StaticMesh, ItemData->ZoomLevel);
 }

@@ -78,6 +78,7 @@ void AJHUD::FocusWidget(UUserWidget* Widget)
 		else
 		{
 			ControlledPawn->EnableInput(OwningPlayerController);
+			UWidgetBlueprintLibrary::SetFocusToGameViewport();
 		}
 	}
 }
@@ -104,14 +105,7 @@ void AJHUD::ShowInspectWidget(UJBaseItem* ItemContext)
 
 	WBP_ItemInspect->UpdateInspectActor(ItemContext);
 
-	WBP_ItemInspect->AddToViewport();
-
-	APlayerController* const OwningPlayerController = GetOwningPlayerController();
-
-	FInputModeUIOnly InputMode;
-	InputMode.SetWidgetToFocus(WBP_ItemInspect->TakeWidget());
-	InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::LockOnCapture);
-	OwningPlayerController->SetInputMode(InputMode);
+	FocusWidget(WBP_ItemInspect);
 }
 
 void AJHUD::HideInspectWidget()
@@ -136,7 +130,6 @@ void AJHUD::HideActionsWidget()
 
 	WBP_ActionsWidget->RemoveFromViewport();
 	FocusWidget(nullptr);
-	UWidgetBlueprintLibrary::SetFocusToGameViewport();
 }
 
 bool AJHUD::IsInventoryOpen() const

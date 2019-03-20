@@ -50,6 +50,9 @@ protected:
 	FVector DesiredExtent;
 
 	UPROPERTY()
+	FVector DefaultDesiredExtent;
+
+	UPROPERTY()
 	FVector2D OnStartRotateLocation;
 
 	UPROPERTY()
@@ -69,6 +72,6 @@ public:
 	void OnMouseMove(FVector2D MouseLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "Inspect")
-	void UpdateMesh(UStaticMesh* NewStaticMesh);
+	void UpdateMesh(UStaticMesh* NewStaticMesh, float ZoomLevel);
 
 };

@@ -45,6 +45,14 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item")
 	TSoftObjectPtr<UStaticMesh> InspectStaticMesh;
 
+	/** Total audio played when you look at this item from your inventory. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "General")
+	TSoftObjectPtr<USoundCue> LookingSoundCue;
+
+	/** Used by the inspect menu for object zoom level (Smaller number results in less zoom). */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "General")
+	float ZoomLevel;
+
 	/** Can this item be re-used? */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "General")
 	uint8 bIsReusable : 1;
@@ -54,7 +62,7 @@ public:
 	int ReuseCount;
 
 	/** Current times this item has been used. */
-	UPROPERTY(BlueprintReadOnly, Category = "General")
+	UPROPERTY(BlueprintReadWrite, Category = "General")
 	int UseCount;
 
 };
