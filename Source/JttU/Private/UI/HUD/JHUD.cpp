@@ -121,7 +121,8 @@ void AJHUD::ShowActionsWidget(FVector2D ScreenLocation)
 	if (!WBP_ActionsWidget) return;
 
 	WBP_ActionsWidget->SetPositionInViewport(ScreenLocation);
-	DisplayWidget(WBP_ActionsWidget);
+	WBP_ActionsWidget->AddToViewport();
+	FocusWidget(WBP_ActionsWidget);
 }
 
 void AJHUD::HideActionsWidget()

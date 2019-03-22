@@ -12,6 +12,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/DecalComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PlayerController.h"
@@ -75,7 +76,7 @@ AJCharacter::AJCharacter(const FObjectInitializer& ObjectInitializer)
 	CursorToWorld->SetRelativeRotation(FRotator(90.0f, 0.0f, 0.0f).Quaternion());
 	CursorToWorld->SetHiddenInGame(true);
 
-	bMovementDisabled = false;
+	bMovementInputIgnored = false;
 	NearLocationRadius = 100.0f;
 	MoveToDoorAcceptanceRadius = 100.0f;
 	MoveToUsableAcceptanceRadius = 110.0f;
@@ -104,21 +105,24 @@ void AJCharacter::OnLeftClickPressed()
 	AJPlayerController* PC = Cast<AJPlayerController>(GetController());
 	UE_LOG(LogTemp, Warning, TEXT("AJCharacter::OnLeftClickPressed() - Running."));
 
-	// Return early if movement changes are disabled, MoveToUsableActor is valid or we have started interacting with something.
-	if (bMovementDisabled && !ItemUsing)
+	// Return early if IsIgnoringMovementInputs return true, MoveToUsableActor is valid or we have started interacting with something.
+	if (IsIgnoringMovementInputs() && !ItemUsing)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("AJCharacter::OnLeftClickPressed() - Movement is disabled and item using not valid."));
 		PC->OnSetDestinationReleased();
 		return;
 	}
 
 	if (MoveToUsableActor)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("AJCharacter::OnLeftClickPressed() - MoveToUsableActor is still valid."));
 		MoveToUsableTimerCancel();
 	}
 
 	RemoveActionsWidget();
 	if (!OnInteract())
 	{
+		UE_LOG(LogTemp, Warning, TEXT("AJCharacter::OnLeftClickPressed() - OnInteract returned false."));
 		PC->OnSetDestinationPressed();
 	}	
 }
@@ -283,12 +287,12 @@ FVector AJCharacter::GetLocationNear(const FVector TargetLocation) const
 	return TargetLocation + (DirectionVector * NearLocationRadius);
 }
 
-void AJCharacter::DisableMovement(const bool bDisableMovement)
+void AJCharacter::IgnoreMovementInputs(const bool bIgnoreMovementInputs)
 {
-	bMovementDisabled = bDisableMovement;
+	bMovementInputIgnored = bIgnoreMovementInputs;
 }
 
-bool AJCharacter::IsMovementDisabled() const
+bool AJCharacter::IsIgnoringMovementInputs() const
 {
-	return bMovementDisabled;
+	return bMovementInputIgnored;
 }

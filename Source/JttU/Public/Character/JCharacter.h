@@ -111,14 +111,14 @@ protected:
 
 private:
 	UPROPERTY()
-	uint8 bMovementDisabled : 1;
+	uint8 bMovementInputIgnored : 1;
 
 public:
 	UFUNCTION(BlueprintCallable)
-	void DisableMovement(bool bDisableMovement = false);
+	void IgnoreMovementInputs(bool bIgnoreMovementInputs = false);
 
 	UFUNCTION(BlueprintPure, BlueprintCallable)
-	bool IsMovementDisabled() const;
+	bool IsIgnoringMovementInputs() const;
 
 protected:
 	UFUNCTION(BlueprintImplementableEvent)
