@@ -59,6 +59,16 @@ public:
 	bool IsAnyWidgetOpen();
 
 public:
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void ShowInventoryWidget();
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void HideInventoryWidget();
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void ToggleInventoryWidget();
+
+public:
 	UFUNCTION(BlueprintCallable, Category = "Inspect")
 	void ShowInspectWidget(UJBaseItem* ItemContext);
 

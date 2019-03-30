@@ -28,7 +28,6 @@ void AJHUD::DisplayWidget(UUserWidget* Widget)
 	if (IsAnyWidgetOpen())
 	{
 		CloseWidget(ActiveWidget);
-		return;
 	}
 
 	ActiveWidget = Widget;
@@ -98,22 +97,50 @@ bool AJHUD::IsAnyWidgetOpen()
 	return (ActiveWidget != nullptr);
 }
 
+void AJHUD::ShowInventoryWidget()
+{
+	if (!WBP_Inventory) return;
+	if (WBP_Inventory->IsInViewport()) return;
+
+	DisplayWidget(WBP_Inventory);
+}
+
+void AJHUD::HideInventoryWidget()
+{
+	if (!WBP_Inventory) return;
+	if (!WBP_Inventory->IsInViewport()) return;
+
+	CloseWidget(WBP_Inventory);
+}
+
+void AJHUD::ToggleInventoryWidget()
+{
+	if (!WBP_Inventory) return;
+	if (WBP_Inventory->IsInViewport())
+	{
+		CloseWidget(WBP_Inventory);
+	}
+	else
+	{
+		DisplayWidget(WBP_Inventory);
+	}
+}
+
 void AJHUD::ShowInspectWidget(UJBaseItem* ItemContext)
 {
 	if (!WBP_ItemInspect) return;
 	if (WBP_ItemInspect->IsInViewport()) return;
 
 	WBP_ItemInspect->UpdateInspectActor(ItemContext);
-
-	FocusWidget(WBP_ItemInspect);
+	DisplayWidget(WBP_ItemInspect);
 }
 
 void AJHUD::HideInspectWidget()
 {
-	if (!WBP_ItemInspect || !WBP_ItemInspect->IsInViewport()) return;
+	if (!WBP_ItemInspect) return;
+	if (!WBP_ItemInspect->IsInViewport()) return;
 
-	WBP_ItemInspect->RemoveFromViewport();
-	FocusWidget(WBP_Inventory);
+	DisplayWidget(WBP_Inventory);
 }
 
 void AJHUD::ShowActionsWidget(FVector2D ScreenLocation)
